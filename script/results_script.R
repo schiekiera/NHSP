@@ -31,13 +31,14 @@ library(ResourceSelection) # Goodness of fit tests
 # =============================================================================
 # Set the data directory and read the cleaned data file
 # Change the working directory to the data directory
-setwd("/Users/louis/Desktop/06_Familie_Freunde_Privat/Anton/nhsp/data/")
+setwd("github_repo/data")
 
 # Define the output directory for plots
 output_dir_plots <- "output/plots"
 
-# Read the cleaned data from an Excel file
-df <- read_excel("df_cleaned.xlsx")
+# Read the cleaned data from GitHub
+url <- "https://raw.githubusercontent.com/schiekiera/NHSP/refs/heads/main/data/data_nhsp.csv"
+df <- read.csv(url)
 head(df)
 
 # =============================================================================
@@ -83,7 +84,7 @@ if (length(existing_vars) > 0) {
   if (!dir.exists(output_dir)) {
     dir.create(output_dir, recursive = TRUE)
   }
-  write.csv(numeric_summary, file.path(output_dir, "numeric_summary.csv"), row.names = FALSE)
+  #write.csv(numeric_summary, file.path(output_dir, "numeric_summary.csv"), row.names = FALSE)
   cat("Descriptive statistics have been written to data/output/numeric_summary.csv\n")
 }
 
@@ -100,7 +101,7 @@ output_dir <- "output"
 if (!dir.exists(output_dir)) {
   dir.create(output_dir, recursive = TRUE)
 }
-write.csv(dep_var_summary, file.path(output_dir, "dep_var_summary.csv"), row.names = FALSE)
+#write.csv(dep_var_summary, file.path(output_dir, "dep_var_summary.csv"), row.names = FALSE)
 cat("Frequency distribution of dependent variable has been written to output/dep_var_summary.csv\n")
 
 # =============================================================================
@@ -141,7 +142,7 @@ p_bar <- ggplot(df, aes(x = dependent_variable, fill = dependent_variable)) +
   theme_minimal() +
   theme(legend.position = "none")
 
-ggsave(filename = file.path(output_dir_plots, "bar_plot_dependent_variable.pdf"), plot = p_bar, device = "pdf")
+#ggsave(filename = file.path(output_dir_plots, "bar_plot_dependent_variable.pdf"), plot = p_bar, device = "pdf")
 
 cat("Bar plot for dependent variable has been written to output/plots/bar_plot_dependent_variable.pdf\n")
 
@@ -175,7 +176,7 @@ if(nrow(cor_data) > 0) {
   print(p_pairs)
 }
 
-ggsave(filename = file.path(output_dir_plots, "pairs_plot.pdf"), plot = p_pairs, device = "pdf")
+#ggsave(filename = file.path(output_dir_plots, "pairs_plot.pdf"), plot = p_pairs, device = "pdf")
 
 cat("Pairs plot has been written to output/plots/pairs_plot.pdf\n")
 
@@ -210,7 +211,7 @@ if (length(plot_list_box) > 0) {
   grid.arrange(grobs = plot_list_box, ncol = 3)
 }
 
-ggsave(filename = file.path(output_dir_plots, "box_plots_by_dependent_variable.pdf"), plot = grid.arrange(grobs = plot_list_box, ncol = 3), width = 12, height = 8, device = "pdf")
+#ggsave(filename = file.path(output_dir_plots, "box_plots_by_dependent_variable.pdf"), plot = grid.arrange(grobs = plot_list_box, ncol = 3), width = 12, height = 8, device = "pdf")
 
 cat("Box plots by dependent variable have been written to output/plots/box_plots_by_dependent_variable.pdf\n")
 
@@ -370,7 +371,7 @@ simple_results <- data.frame(
                             sprintf("%.3f", p_values))),
   stringsAsFactors = FALSE
 )
-write.csv(simple_results, "output/model_results_simple.csv", row.names = FALSE)
+#write.csv(simple_results, "output/model_results_simple.csv", row.names = FALSE)
 cat("Simple model results saved to output/model_results_simple.csv\n")
 
 # Create comprehensive model results table for CSV export
@@ -490,14 +491,14 @@ model_stats <- data.frame(
 complete_model_table <- rbind(model_results_table, model_stats)
 
 # Write to CSV
-write.csv(complete_model_table, "output/ordinal_regression_model_table.csv", row.names = FALSE)
+#write.csv(complete_model_table, "output/ordinal_regression_model_table.csv", row.names = FALSE)
 
 # Also create a publication-ready version with cleaner column names
 pub_table <- complete_model_table
 colnames(pub_table) <- c("Predictors", "Coefficients", "Odds Ratios", "Std. Error", 
                         "CI Lower", "CI Upper", "95% CI", "t Statistic", "p")
 
-write.csv(pub_table, "output/ordinal_regression_results_formatted.csv", row.names = FALSE)
+#write.csv(pub_table, "output/ordinal_regression_results_formatted.csv", row.names = FALSE)
 
 cat("Model results tables saved to:\n")
 cat("- output/ordinal_regression_model_table.csv\n")
@@ -532,7 +533,7 @@ p_coef <- ggplot(model_tidy, aes(x = estimate, y = term)) +
 print("=== COEFFICIENT PLOT ===")
 print(p_coef)
 # save as pdf
-ggsave(filename = file.path(output_dir_plots, "coefficient_plot.pdf"), plot = p_coef, device = "pdf")
+#ggsave(filename = file.path(output_dir_plots, "coefficient_plot.pdf"), plot = p_coef, device = "pdf")
 
 cat("Coefficient plot has been written to output/plots/coefficient_plot.pdf\n")
 
@@ -561,7 +562,7 @@ p_or <- ggplot(model_tidy_or, aes(x = estimate, y = reorder(term, estimate))) +
 print("=== ODDS RATIO PLOT ===")
 print(p_or)
 
-ggsave(filename = file.path(output_dir_plots, "odds_ratio_plot.pdf"), plot = p_or, device = "pdf")
+#ggsave(filename = file.path(output_dir_plots, "odds_ratio_plot.pdf"), plot = p_or, device = "pdf")
 
 cat("Odds ratio plot has been written to output/plots/odds_ratio_plot.pdf\n")
 
