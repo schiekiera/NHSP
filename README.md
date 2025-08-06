@@ -1,0 +1,2 @@
+# NHSP Climate-Change Analysis
+This repository contains an R script (`results_script.R`) and a cleaned dataset (`data_nhsp.csv`) used to analyze how climate change considerations are integrated into National Health Strategic Plans (NHSPs). The script performs descriptive analyses, fits an ordinal logistic regression model, checks model assumptions, and conducts a sensitivity analysis by removing high-end outliers (+3 SD). All main results and visualizations can be reproduced directly from the script using R (≥ 4.4.2) and the listed packages.
